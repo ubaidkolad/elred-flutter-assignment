@@ -18,13 +18,33 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light
             .copyWith(statusBarColor: Theme.of(context).primaryColorLight),
         child: SafeArea(
-          child: CustomScrollView(slivers: [HomeHeader(), HomeBody()]),
+          child: CustomScrollView(slivers: [
+            HomeHeader(),
+            boldSmallTitle("INBOX"),
+            HomeBody(),
+            boldSmallTitle("COMPLETED (5)"),
+          ]),
         ),
       ),
+    );
+  }
+
+  Widget boldSmallTitle(String title) {
+    return SliverPadding(
+      padding: EdgeInsets.only(
+        top: 24,
+        left: 32,
+      ),
+      sliver: SliverToBoxAdapter(
+          child: Text(
+        title,
+        style: Theme.of(context).textTheme.headline2,
+      )),
     );
   }
 }

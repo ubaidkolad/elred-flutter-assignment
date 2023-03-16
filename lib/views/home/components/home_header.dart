@@ -2,6 +2,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class HomeHeader extends StatefulWidget {
   const HomeHeader({Key? key}) : super(key: key);
@@ -50,16 +51,14 @@ class _HomeHeaderState extends State<HomeHeader> {
               child: Container(
                 height: 4,
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        stops: [
-                      0.1,
-                      .9
-                    ],
-                        colors: [
-                      Theme.of(context).primaryColor.withOpacity(.4),
-                      Colors.blue.withOpacity(1)
-                    ])),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomCenter, stops: [
+                  0.1,
+                  0.9,
+                ], colors: [
+                  Color.fromARGB(255, 158, 187, 241),
+                  Color(0xFF2596be)
+                ])),
               ),
             ),
           ),
@@ -105,7 +104,24 @@ class _HomeHeaderState extends State<HomeHeader> {
                     ),
                     Row(
                       children: [
-                        CircleAvatar(),
+                        CircularPercentIndicator(
+                          radius: 10.0,
+                          lineWidth: 2.0,
+                          percent: .6,
+                          rotateLinearGradient: true,
+                          animation: true,
+                          backgroundColor: Colors.white54,
+                          linearGradient: LinearGradient(colors: [
+                            Color.fromARGB(255, 158, 187, 241),
+                            Color(0xFF2596be),
+                          ], stops: [
+                            0.1,
+                            0.9
+                          ]),
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
                         Text(
                           "65% done",
                           style: Theme.of(context).textTheme.caption,
