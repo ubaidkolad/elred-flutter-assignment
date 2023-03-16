@@ -1,5 +1,6 @@
 // ignore_for_file: prefr_const_literals_to_create_immutables, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:elred_flutter_assignment/views/home/components/home_body.dart';
 import 'package:elred_flutter_assignment/views/home/components/home_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,7 +22,7 @@ class _HomeViewState extends State<HomeView> {
         value: SystemUiOverlayStyle.light
             .copyWith(statusBarColor: Theme.of(context).primaryColorLight),
         child: SafeArea(
-          child: CustomScrollView(slivers: [HomeHeader()]),
+          child: CustomScrollView(slivers: [HomeHeader(), HomeBody()]),
         ),
       ),
     );

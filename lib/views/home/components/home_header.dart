@@ -11,13 +11,18 @@ class HomeHeader extends StatefulWidget {
 }
 
 class _HomeHeaderState extends State<HomeHeader> {
+  String homeHeaderTitle = "Your\nThings";
+
   @override
   Widget build(BuildContext context) {
     double headerHeight = MediaQuery.of(context).size.width / 2;
 
     return SliverAppBar(
+      floating: true,
+      snap: false,
       expandedHeight: headerHeight,
-      flexibleSpace: Stack(
+      flexibleSpace: FlexibleSpaceBar(
+          background: Stack(
         children: [
           Container(
               decoration: BoxDecoration(
@@ -76,7 +81,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Your\nThings',
+                      homeHeaderTitle,
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     Row(
@@ -113,7 +118,7 @@ class _HomeHeaderState extends State<HomeHeader> {
             ),
           )
         ],
-      ),
+      )),
     );
   }
 
