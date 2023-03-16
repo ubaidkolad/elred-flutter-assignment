@@ -21,7 +21,7 @@ class _HomeViewState extends State<HomeView> {
       backgroundColor: Colors.white,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light
-            .copyWith(statusBarColor: Theme.of(context).primaryColorLight),
+            .copyWith(statusBarColor: Theme.of(context).primaryColor),
         child: SafeArea(
           child: CustomScrollView(slivers: [
             HomeHeader(),
@@ -31,6 +31,14 @@ class _HomeViewState extends State<HomeView> {
           ]),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColorLight,
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+            size: 32,
+          ),
+          onPressed: () {}),
     );
   }
 
