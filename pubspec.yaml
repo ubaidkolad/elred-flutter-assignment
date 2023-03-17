@@ -39,6 +39,7 @@ dev_dependencies:
     sdk: flutter
   flutter_face_pile: ^0.0.3
   percent_indicator: ^4.2.3
+  intl: ^0.18.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -72,10 +73,10 @@ flutter:
     # "family" key with the font family name, and a "fonts" key with a
     # list giving the asset and other descriptors for the font. For
     # example:
-    # fonts:
-    - family: Raleway
+  fonts:
+    - family: Inter
       fonts:
-        - asset: fonts/Raleway-ExtraLight.ttf
+        - asset: assets/fonts/Inter-Light.ttf
           style: italic
   #   - family: Trajan Pro
   #     fonts:

@@ -1,3 +1,4 @@
+import 'package:elred_flutter_assignment/common_components/icon_with_circular_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -20,22 +21,8 @@ class HomeBody extends StatelessWidget {
                               color: Colors.grey[200]!, width: 1.3))),
                   child: Row(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.grey[200]!,
-                            width: 1.3,
-                          ),
-                        ),
-                        child: CircleAvatar(
-                          maxRadius: 24,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.design_services_outlined,
-                            color: Theme.of(context).primaryColorLight,
-                          ),
-                        ),
+                      IconWithCircularBorder(
+                        borderColor: Colors.grey[300]!,
                       ),
                       SizedBox(
                         width: 16,
