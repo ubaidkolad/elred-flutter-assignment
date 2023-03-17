@@ -1,3 +1,4 @@
+import 'package:elred_flutter_assignment/config/constants.dart';
 import 'package:elred_flutter_assignment/config/styles/theme.dart';
 import 'package:elred_flutter_assignment/views/auth/login_view.dart';
 import 'package:elred_flutter_assignment/views/home/home_view.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Elred Flutter Assignment',
       theme: themeData,
-      home: const LoginView(),
+      home: auth.currentUser == null ? LoginView() : HomeView(),
     );
   }
 }

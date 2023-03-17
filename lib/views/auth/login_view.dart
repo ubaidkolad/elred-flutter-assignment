@@ -1,4 +1,5 @@
 import 'package:elred_flutter_assignment/common_components/custom_button.dart';
+import 'package:elred_flutter_assignment/config/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -45,7 +46,9 @@ class _LoginViewState extends State<LoginView> {
                               MaterialStateProperty.all(EdgeInsets.all(12)),
                           backgroundColor:
                               MaterialStateProperty.all(Colors.white)),
-                      onPressed: () {},
+                      onPressed: () {
+                        authController.signInWithGoogle();
+                      },
                       icon: Image.asset(
                         "assets/images/google_icon.png",
                         scale: 24,
