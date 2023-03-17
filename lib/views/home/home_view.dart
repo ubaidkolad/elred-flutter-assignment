@@ -1,6 +1,6 @@
 // ignore_for_file: prefr_const_literals_to_create_immutables, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:elred_flutter_assignment/views/add_task/add_task_view.dart';
+import 'package:elred_flutter_assignment/views/add_task/task_form_view.dart';
 import 'package:elred_flutter_assignment/views/home/components/home_body.dart';
 import 'package:elred_flutter_assignment/views/home/components/home_header.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +41,7 @@ class _HomeViewState extends State<HomeView> {
           ),
           onPressed: () {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => AddTaskView()));
+                .push(MaterialPageRoute(builder: (context) => TaskFormView()));
           }),
     );
   }

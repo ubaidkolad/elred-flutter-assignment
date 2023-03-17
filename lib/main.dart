@@ -1,8 +1,12 @@
 import 'package:elred_flutter_assignment/config/styles/theme.dart';
+import 'package:elred_flutter_assignment/views/auth/login_view.dart';
 import 'package:elred_flutter_assignment/views/home/home_view.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -14,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Elred Flutter Assignment',
       theme: themeData,
-      home: const HomeView(),
+      home: const LoginView(),
     );
   }
 }

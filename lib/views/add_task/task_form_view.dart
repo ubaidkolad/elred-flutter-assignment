@@ -7,14 +7,14 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 
-class AddTaskView extends StatefulWidget {
-  const AddTaskView({Key? key}) : super(key: key);
+class TaskFormView extends StatefulWidget {
+  const TaskFormView({Key? key}) : super(key: key);
 
   @override
-  State<AddTaskView> createState() => _AddTaskViewState();
+  State<TaskFormView> createState() => _TaskFormView();
 }
 
-class _AddTaskViewState extends State<AddTaskView> {
+class _TaskFormView extends State<TaskFormView> {
   TextEditingController taskName = TextEditingController();
   TextEditingController taskPlace = TextEditingController();
   TextEditingController taskTime = TextEditingController();
