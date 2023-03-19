@@ -126,7 +126,7 @@ class _TaskFormView extends State<TaskFormView> {
     if (picked != null) {
       selectedDate = picked;
       print('Selected date ${picked.toLocal()}');
-      taskTime!.text = DateFormat.yMMMMd().format(picked);
+      taskTime.text = DateFormat.yMMMMd().format(picked);
       setState(() {});
     }
   }

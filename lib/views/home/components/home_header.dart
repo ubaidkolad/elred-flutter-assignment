@@ -19,6 +19,8 @@ class _HomeHeaderState extends State<HomeHeader> {
     double headerHeight = MediaQuery.of(context).size.width / 2;
 
     return SliverAppBar(
+      backgroundColor: Theme.of(context).primaryColor,
+      pinned: true,
       floating: true,
       snap: false,
       expandedHeight: headerHeight,
@@ -67,14 +69,14 @@ class _HomeHeaderState extends State<HomeHeader> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.menu,
-                      color: Colors.white,
-                    )
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Icon(
+                //       Icons.menu,
+                //       color: Colors.white,
+                //     )
+                //   ],
+                // ),
                 Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -83,6 +83,6 @@ class HomeBody extends StatelessWidget {
                     ],
                   ),
                 ),
-            childCount: 3));
+            childCount: 100));
   }
 }

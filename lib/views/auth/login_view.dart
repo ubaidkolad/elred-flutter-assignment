@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:elred_flutter_assignment/common_components/custom_button.dart';
 import 'package:elred_flutter_assignment/config/constants.dart';
 import 'package:flutter/material.dart';
@@ -46,8 +48,16 @@ class _LoginViewState extends State<LoginView> {
                               MaterialStateProperty.all(EdgeInsets.all(12)),
                           backgroundColor:
                               MaterialStateProperty.all(Colors.white)),
-                      onPressed: () {
-                        authController.signInWithGoogle();
+                      onPressed: () async {
+                        String loginResponse =
+                            await authController.signInWithGoogle();
+                        if (loginResponse == "success") {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/', (Route<dynamic> route) => false);
+                        } else {
+                          dialogsController.popUpSnackBar(context,
+                              "Failed to login. Please try again", false);
+                        }
                       },
                       icon: Image.asset(
                         "assets/images/google_icon.png",

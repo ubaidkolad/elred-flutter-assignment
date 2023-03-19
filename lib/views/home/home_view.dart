@@ -2,6 +2,7 @@
 
 import 'package:elred_flutter_assignment/views/add_task/task_form_view.dart';
 import 'package:elred_flutter_assignment/views/home/components/home_body.dart';
+import 'package:elred_flutter_assignment/views/home/components/home_drawer.dart';
 import 'package:elred_flutter_assignment/views/home/components/home_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +20,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: HomeDrawer(),
       backgroundColor: Colors.white,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light
