@@ -29,6 +29,19 @@ class TaskController {
     }
   }
 
+  Future<bool> deleteTaskFromDatabase(String taskId) async {
+    try {
+      await usersCollection
+          .doc(auth.currentUser!.uid)
+          .collection('tasks')
+          .doc(taskId)
+          .delete();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<List<TaskDetails>> getUserTasks() async {
     var tasksDocs = await usersCollection
         .doc(auth.currentUser!.uid)
