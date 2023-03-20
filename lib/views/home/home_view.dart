@@ -55,7 +55,9 @@ class _HomeViewState extends State<HomeView> {
   Widget homeLayout(List<TaskDetails> taskDetails) {
     return SafeArea(
       child: CustomScrollView(slivers: [
-        HomeHeader(),
+        HomeHeader(
+          taskDetails: taskDetails,
+        ),
         boldSmallTitle("INBOX"),
         HomeBody(
           taskDetails: taskDetails,

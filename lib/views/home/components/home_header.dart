@@ -1,18 +1,22 @@
+import 'package:elred_flutter_assignment/config/constants.dart';
+import 'package:elred_flutter_assignment/models/task.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class HomeHeader extends StatefulWidget {
-  const HomeHeader({Key? key}) : super(key: key);
+class HomeHeader extends StatelessWidget {
+  final List<TaskDetails> taskDetails;
+  const HomeHeader({Key? key, required this.taskDetails}) : super(key: key);
 
-  @override
-  State<HomeHeader> createState() => _HomeHeaderState();
-}
+  final String homeHeaderTitle = "Your \nThings";
 
-class _HomeHeaderState extends State<HomeHeader> {
-  String homeHeaderTitle = "Your\nThings";
+  num getPercentage() {
+    int completedTasks = tasksController.getCompletedTasks(taskDetails);
+    num completedPercentage = (completedTasks / taskDetails.length) * 100;
+    return completedPercentage;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,7 @@ class _HomeHeaderState extends State<HomeHeader> {
           ),
           Container(
             color: Colors.white12.withOpacity(.2),
-            width: 250,
+            width: MediaQuery.of(context).size.width * (getPercentage() / 100),
             child: Align(
               alignment: FractionalOffset.bottomCenter,
               child: Container(
@@ -87,11 +91,11 @@ class _HomeHeaderState extends State<HomeHeader> {
                     ),
                     Row(
                       children: [
-                        taskNumberTitleAndSubtitle("23", 'Personal'),
+                        taskNumberTitleAndSubtitle(context, "23", 'Personal'),
                         SizedBox(
                           width: 12,
                         ),
-                        taskNumberTitleAndSubtitle("15", "Business"),
+                        taskNumberTitleAndSubtitle(context, "15", "Business"),
                       ],
                     ),
                   ],
@@ -109,7 +113,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                         CircularPercentIndicator(
                           radius: 10.0,
                           lineWidth: 2.0,
-                          percent: .6,
+                          percent: getPercentage() / 100,
                           rotateLinearGradient: true,
                           animation: true,
                           backgroundColor: Colors.white54,
@@ -125,7 +129,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                           width: 4,
                         ),
                         Text(
-                          "65% done",
+                          "${getPercentage()}% done",
                           style: Theme.of(context).textTheme.caption,
                         )
                       ],
@@ -141,7 +145,8 @@ class _HomeHeaderState extends State<HomeHeader> {
   }
 
   //Task Number and Task Type Text
-  Widget taskNumberTitleAndSubtitle(String numberOfTasks, String taskType) {
+  Widget taskNumberTitleAndSubtitle(
+      context, String numberOfTasks, String taskType) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,
