@@ -124,6 +124,7 @@ class _TaskFormView extends State<TaskFormView> {
                 ),
                 Spacer(),
                 CustomDropdown(
+                  value: taskType,
                   hintText: "Select Task Type",
                   dropdownOptions: ["Personal", "Business"],
                   callback: ((selectedOption) {

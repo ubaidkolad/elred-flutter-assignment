@@ -129,7 +129,7 @@ class HomeHeader extends StatelessWidget {
                           width: 4,
                         ),
                         Text(
-                          "${getPercentage()}% done",
+                          "${getPercentage().toStringAsFixed(2)}% done",
                           style: Theme.of(context).textTheme.caption,
                         )
                       ],
