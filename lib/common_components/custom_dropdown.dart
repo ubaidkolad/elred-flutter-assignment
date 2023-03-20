@@ -5,8 +5,13 @@ import 'package:flutter/src/widgets/framework.dart';
 class CustomDropdown extends StatefulWidget {
   final String hintText;
   final List<String> dropdownOptions;
+  final void Function(String) callback;
 
-  const CustomDropdown({required this.hintText, required this.dropdownOptions});
+  const CustomDropdown({
+    required this.hintText,
+    required this.dropdownOptions,
+    required this.callback,
+  });
 
   @override
   State<CustomDropdown> createState() => _CustomDropdownState();
@@ -39,6 +44,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
         onChanged: (String? value) {
           dropdownValue = value!;
           setState(() {});
+          widget.callback(value);
         });
   }
 }

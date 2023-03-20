@@ -11,7 +11,12 @@ class Routerr {
       case "/login":
         return MaterialPageRoute(builder: (_) => const LoginView());
       case "/task_form_view":
-        return MaterialPageRoute(builder: (_) => const TaskFormView());
+        var args = settings.arguments as TaskFormView;
+        return MaterialPageRoute(
+            builder: (_) => TaskFormView(
+                  isEditing: args.isEditing,
+                  taskDetails: args.taskDetails,
+                ));
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

@@ -30,7 +30,7 @@ class _HomeViewState extends State<HomeView> {
             HomeHeader(),
             boldSmallTitle("INBOX"),
             HomeBody(),
-            boldSmallTitle("COMPLETED (5)"),
+            //  boldSmallTitle("COMPLETED"),
           ]),
         ),
       ),
