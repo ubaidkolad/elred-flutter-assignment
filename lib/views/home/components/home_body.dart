@@ -9,72 +9,11 @@ import 'package:flutter_face_pile/flutter_face_pile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeBody extends StatelessWidget {
-  const HomeBody({Key? key}) : super(key: key);
+  final List<TaskDetails> taskDetails;
+  const HomeBody({Key? key, required this.taskDetails}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _tasksStream = usersCollection
-        .doc(auth.currentUser!.uid)
-        .collection('tasks')
-        .snapshots();
-
-    return StreamBuilder<QuerySnapshot>(
-      stream: _tasksStream,
-      builder: ((context, snapshot) {
-        if (snapshot.hasError) {
-          return SliverPadding(
-            padding: EdgeInsets.only(
-              top: 24,
-              left: 32,
-            ),
-            sliver: SliverToBoxAdapter(
-                child: Text(
-              'Someting went wrong',
-              style: Theme.of(context).textTheme.headline2,
-            )),
-          );
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return SliverPadding(
-            padding: EdgeInsets.only(
-              top: 24,
-              left: 32,
-            ),
-            sliver: SliverToBoxAdapter(
-                child: CircularProgressIndicator(
-              color: Theme.of(context).primaryColorLight,
-            )),
-          );
-        }
-        List<TaskDetails> taskDetails = snapshot.data!.docs
-            .map(
-                ((e) => TaskDetails.fromJson(e.data() as Map<String, dynamic>)))
-            .toList();
-        if (taskDetails.length == 0) {
-          return noTasksPlaceholder(context);
-        }
-        return tasksList(taskDetails: taskDetails);
-      }),
-    );
-  }
-
-  Widget noTasksPlaceholder(context) {
-    return SliverPadding(
-      padding: EdgeInsets.only(
-        top: 48,
-        left: 32,
-      ),
-      sliver: SliverToBoxAdapter(
-          child: Center(
-        child: Text("No tasks found. \nClick on + to add one.",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline2!),
-      )),
-    );
-  }
-
-  Widget tasksList({List<TaskDetails>? taskDetails}) {
     return SliverList(
         delegate: SliverChildBuilderDelegate(
             (context, index) => GestureDetector(
@@ -82,7 +21,7 @@ class HomeBody extends StatelessWidget {
                     Navigator.of(context).pushNamed("/task_form_view",
                         arguments: TaskFormView(
                           isEditing: true,
-                          taskDetails: taskDetails![index],
+                          taskDetails: taskDetails[index],
                         ));
                   },
                   child: Container(
@@ -105,14 +44,14 @@ class HomeBody extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              taskDetails![index].taskName,
+                              taskDetails[index].taskName,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline4!
                                   .copyWith(color: Colors.black),
                             ),
                             Text(
-                              taskDetails![index].taskPlace,
+                              taskDetails[index].taskPlace,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline3!
@@ -123,7 +62,7 @@ class HomeBody extends StatelessWidget {
                         Spacer(),
                         Column(
                           children: [
-                            Text(taskDetails![index].taskTime,
+                            Text(taskDetails[index].taskTime,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3!
@@ -158,6 +97,21 @@ class HomeBody extends StatelessWidget {
                     ),
                   ),
                 ),
-            childCount: taskDetails!.length));
+            childCount: taskDetails.length));
+  }
+
+  Widget noTasksPlaceholder(context) {
+    return SliverPadding(
+      padding: EdgeInsets.only(
+        top: 48,
+        left: 32,
+      ),
+      sliver: SliverToBoxAdapter(
+          child: Center(
+        child: Text("No tasks found. \nClick on + to add one.",
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline2!),
+      )),
+    );
   }
 }

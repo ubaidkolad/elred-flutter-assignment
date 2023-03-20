@@ -1,13 +1,16 @@
 import 'package:elred_flutter_assignment/common_components/custom_button.dart';
+import 'package:elred_flutter_assignment/common_components/custom_checkbox.dart';
 import 'package:elred_flutter_assignment/common_components/custom_dropdown.dart';
 import 'package:elred_flutter_assignment/common_components/custom_text_input.dart';
 import 'package:elred_flutter_assignment/common_components/icon_with_circular_border.dart';
 import 'package:elred_flutter_assignment/config/constants.dart';
 import 'package:elred_flutter_assignment/models/task.dart';
+import 'package:elred_flutter_assignment/providers/TaskListProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class TaskFormView extends StatefulWidget {
   final bool isEditing;
@@ -25,6 +28,7 @@ class _TaskFormView extends State<TaskFormView> {
   TextEditingController taskTime = TextEditingController();
   TextEditingController taskNotification = TextEditingController();
   String taskType = "Personal";
+  bool isCompleted = false;
   final _formkey = GlobalKey<FormState>();
   bool isLoading = false;
 
@@ -38,6 +42,7 @@ class _TaskFormView extends State<TaskFormView> {
       taskName.text = widget.taskDetails!.taskName;
       taskTime.text = widget.taskDetails!.taskTime;
       taskNotification.text = widget.taskDetails!.taskNotification;
+      isCompleted = widget.taskDetails!.completed;
     }
   }
 
@@ -54,7 +59,7 @@ class _TaskFormView extends State<TaskFormView> {
         taskNotification.text,
         auth.currentUser!.uid,
         widget.taskDetails != null ? widget.taskDetails!.taskId : taskId,
-        false);
+        isCompleted);
 
     bool isSuccess = widget.isEditing
         ? await tasksController.updateTaskInDatabase(taskDetails)
@@ -63,6 +68,8 @@ class _TaskFormView extends State<TaskFormView> {
       isLoading = false;
     });
     if (isSuccess) {
+      Provider.of<TaskListProvider>(context, listen: false)
+          .loadTaskListFromDatabase();
       Navigator.of(context).pop();
       dialogsController.popUpSnackBar(
           context,
@@ -97,7 +104,7 @@ class _TaskFormView extends State<TaskFormView> {
         ),
         centerTitle: true,
         title: Text(
-          "Add new thing",
+          widget.isEditing ? "Edit your thing" : "Add new thing",
           style: TextStyle(fontWeight: FontWeight.w300),
         ),
       ),
@@ -163,16 +170,27 @@ class _TaskFormView extends State<TaskFormView> {
                     }
                   }),
                 ),
+                SizedBox(
+                  height: 16,
+                ),
+                CustomCheckBox(
+                  value: isCompleted,
+                  text: "Mark as completed",
+                  callback: (completed) {
+                    isCompleted = completed;
+                    setState(() {});
+                  },
+                ),
                 Spacer(),
                 CustomButton(
                     isLoading: isLoading,
-                    text: "ADD YOUR THING",
+                    text: widget.isEditing ? "SAVE CHANGES" : "ADD YOUR THING",
                     onPress: () {
                       if (_formkey.currentState!.validate()) {
                         addTask(context);
                       }
                     }),
-                Spacer()
+                Spacer(),
               ]),
         ),
       ),

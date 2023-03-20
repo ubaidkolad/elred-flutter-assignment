@@ -29,6 +29,17 @@ class TaskController {
     }
   }
 
+  Future<List<TaskDetails>> getUserTasks() async {
+    var tasksDocs = await usersCollection
+        .doc(auth.currentUser!.uid)
+        .collection('tasks')
+        .get();
+    List<TaskDetails> tasks = tasksDocs.docs
+        .map((task) => TaskDetails.fromJson(task.data()))
+        .toList();
+    return tasks;
+  }
+
   int getCompletedTasks(List<TaskDetails> taskDetails) {
     List<TaskDetails> completedTasks = [];
     for (var i = 0; i < taskDetails.length; i++) {
