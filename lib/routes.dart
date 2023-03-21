@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 class Routerr {
   static Route<dynamic> generateRouter(RouteSettings settings) {
     switch (settings.name) {
-      case "/":
-        return MaterialPageRoute(builder: (_) => const HomeView());
       case "/login":
         return MaterialPageRoute(builder: (_) => const LoginView());
+      case "/":
+        return MaterialPageRoute(builder: (_) => const HomeView());
       case "/task_form_view":
         var args = settings.arguments as TaskFormView;
         return MaterialPageRoute(

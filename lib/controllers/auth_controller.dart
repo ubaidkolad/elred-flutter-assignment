@@ -25,10 +25,13 @@ class AuthController {
 
       return false;
     } on FirebaseAuthException catch (e) {
+      print(e.code);
       return false;
     } on PlatformException catch (e) {
+      print(e.code);
       return false;
     } catch (e) {
+      print(e.toString());
       return false;
     }
   }

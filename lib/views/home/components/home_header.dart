@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:intl/intl.dart';
 
 class HomeHeader extends StatelessWidget {
   final List<TaskDetails> taskDetails;
@@ -19,6 +20,10 @@ class HomeHeader extends StatelessWidget {
     int completedTasks = tasksController.getCompletedTasks(taskDetails);
     num completedPercentage = (completedTasks / taskDetails.length) * 100;
     return completedPercentage;
+  }
+
+  String getFormattedDate() {
+    return DateFormat.MMMEd().format(DateTime.now()).toString();
   }
 
   @override
@@ -108,7 +113,7 @@ class HomeHeader extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Sept 5, 2015",
+                      getFormattedDate(),
                       style: Theme.of(context).textTheme.caption,
                     ),
                     Row(

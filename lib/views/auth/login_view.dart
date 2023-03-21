@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:elred_flutter_assignment/common_components/custom_button.dart';
 import 'package:elred_flutter_assignment/config/constants.dart';
 import 'package:elred_flutter_assignment/providers/TaskListProvider.dart';
+import 'package:elred_flutter_assignment/views/home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -63,11 +64,13 @@ class _LoginViewState extends State<LoginView> {
                               loading = false;
                               setState(() {});
                               if (loginResponse) {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeView()),
+                                    (Route<dynamic> route) => false);
                                 Provider.of<TaskListProvider>(context,
                                         listen: false)
                                     .loadTaskListFromDatabase();
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    '/', (Route<dynamic> route) => false);
                               } else {
                                 dialogsController.popUpSnackBar(context,
                                     "Failed to login. Please try again", false);
