@@ -2,6 +2,8 @@ import 'package:elred_flutter_assignment/config/constants.dart';
 import 'package:elred_flutter_assignment/models/task.dart';
 import 'package:flutter/material.dart';
 
+enum TaskType { Personal, Business }
+
 class TaskController {
   Future<bool> addTaskToDatabase(TaskDetails taskDetails) async {
     try {
@@ -40,6 +42,26 @@ class TaskController {
     } catch (e) {
       return false;
     }
+  }
+
+  int getPersonalOrBusinessTasks(
+      List<TaskDetails> taskDetails, bool shouldGetPersonalTasks) {
+    if (taskDetails.length == 0) {
+      return 0;
+    }
+    List<TaskDetails> tasks = [];
+    for (var i = 0; i < taskDetails.length; i++) {
+      if (shouldGetPersonalTasks) {
+        if (taskDetails[i].taskType == TaskType.Personal.name) {
+          tasks.add(taskDetails[i]);
+        }
+      } else {
+        if (taskDetails[i].taskType == TaskType.Business.name) {
+          tasks.add(taskDetails[i]);
+        }
+      }
+    }
+    return tasks.length;
   }
 
   Future<List<TaskDetails>> getUserTasks() async {

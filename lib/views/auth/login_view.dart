@@ -16,6 +16,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,38 +43,50 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(
                   height: 24,
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton.icon(
-                      style: ButtonStyle(
-                          padding:
-                              MaterialStateProperty.all(EdgeInsets.all(12)),
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.white)),
-                      onPressed: () async {
-                        bool loginResponse =
-                            await authController.signInWithGoogle();
-                        if (loginResponse) {
-                          Provider.of<TaskListProvider>(context, listen: false)
-                              .loadTaskListFromDatabase();
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/', (Route<dynamic> route) => false);
-                        } else {
-                          dialogsController.popUpSnackBar(context,
-                              "Failed to login. Please try again", false);
-                        }
-                      },
-                      icon: Image.asset(
-                        "assets/images/google_icon.png",
-                        scale: 24,
-                      ),
-                      label: Text(
-                        ' Sign in with Google',
-                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                            color: Colors.grey[700],
-                            fontWeight: FontWeight.bold),
-                      )),
-                )
+                loading
+                    ? CircularProgressIndicator(
+                        color: Theme.of(context).primaryColorLight,
+                      )
+                    : SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton.icon(
+                            style: ButtonStyle(
+                                padding: MaterialStateProperty.all(
+                                    EdgeInsets.all(12)),
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.white)),
+                            onPressed: () async {
+                              loading = true;
+                              setState(() {});
+                              bool loginResponse =
+                                  await authController.signInWithGoogle();
+                              loading = false;
+                              setState(() {});
+                              if (loginResponse) {
+                                Provider.of<TaskListProvider>(context,
+                                        listen: false)
+                                    .loadTaskListFromDatabase();
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    '/', (Route<dynamic> route) => false);
+                              } else {
+                                dialogsController.popUpSnackBar(context,
+                                    "Failed to login. Please try again", false);
+                              }
+                            },
+                            icon: Image.asset(
+                              "assets/images/google_icon.png",
+                              scale: 24,
+                            ),
+                            label: Text(
+                              ' Sign in with Google',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2!
+                                  .copyWith(
+                                      color: Colors.grey[700],
+                                      fontWeight: FontWeight.bold),
+                            )),
+                      )
               ]),
         ),
       ),

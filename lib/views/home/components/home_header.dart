@@ -88,11 +88,17 @@ class HomeHeader extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        taskNumberTitleAndSubtitle(context, "23", 'Personal'),
+                        taskNumberTitleAndSubtitle(
+                            context,
+                            "${tasksController.getPersonalOrBusinessTasks(taskDetails, true)}",
+                            'Personal'),
                         SizedBox(
                           width: 12,
                         ),
-                        taskNumberTitleAndSubtitle(context, "15", "Business"),
+                        taskNumberTitleAndSubtitle(
+                            context,
+                            "${tasksController.getPersonalOrBusinessTasks(taskDetails, false)}",
+                            "Business"),
                       ],
                     ),
                   ],

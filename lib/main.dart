@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
           )
         ],
         child: MaterialApp(
+          builder: ((context, child) => MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaleFactor: .90),
+              child: child!)),
           onGenerateRoute: Routerr.generateRouter,
           title: 'Elred Flutter Assignment',
           theme: themeData,
