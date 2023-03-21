@@ -25,18 +25,10 @@ class AuthController {
 
       return false;
     } on FirebaseAuthException catch (e) {
-      print(e.credential);
-      print(e.code);
-      print(e.plugin);
       return false;
     } on PlatformException catch (e) {
-      print("Exception ${e.code}");
-      print(e.message);
-      print(e.details);
-      print(e..stacktrace);
       return false;
     } catch (e) {
-      print("Error ${e}");
       return false;
     }
   }
