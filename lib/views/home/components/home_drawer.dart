@@ -1,7 +1,9 @@
 import 'package:elred_flutter_assignment/config/constants.dart';
+import 'package:elred_flutter_assignment/providers/TaskListProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer({Key? key}) : super(key: key);
@@ -25,6 +27,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
               onPressed: () async {
                 String logoutResponse = await authController.signOut();
                 if (logoutResponse == "success") {
+                  Provider.of<TaskListProvider>(context, listen: false)
+                      .taskLists
+                      .clear();
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       '/login', (Route<dynamic> route) => false);
                 } else {

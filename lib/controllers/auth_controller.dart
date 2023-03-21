@@ -1,25 +1,43 @@
 import 'package:elred_flutter_assignment/config/constants.dart';
 import 'package:elred_flutter_assignment/models/user.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthController {
-  Future<String> signInWithGoogle() async {
+  Future<bool> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final GoogleSignInAccount? googleSignInAccount;
 
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
+      googleSignInAccount = await googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+        final AuthCredential authCredential = GoogleAuthProvider.credential(
+            accessToken: googleSignInAuthentication.accessToken,
+            idToken: googleSignInAuthentication.idToken);
+        await auth.signInWithCredential(authCredential);
+        registerUserInDB(googleSignInAccount);
+        return true;
+      }
 
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-      await auth.signInWithCredential(credential);
-      registerUserInDB(googleUser!);
-      return "success";
+      return false;
+    } on FirebaseAuthException catch (e) {
+      print(e.credential);
+      print(e.code);
+      print(e.plugin);
+      return false;
+    } on PlatformException catch (e) {
+      print("Exception ${e.code}");
+      print(e.message);
+      print(e.details);
+      print(e..stacktrace);
+      return false;
     } catch (e) {
-      return "error";
+      print("Error ${e}");
+      return false;
     }
   }
 
@@ -31,8 +49,8 @@ class AuthController {
 
   Future<String> signOut() async {
     try {
-      await auth.signOut();
       await GoogleSignIn().signOut();
+      await auth.signOut();
       return "success";
     } catch (e) {
       return "error";

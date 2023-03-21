@@ -13,6 +13,9 @@ class HomeHeader extends StatelessWidget {
   final String homeHeaderTitle = "Your \nThings";
 
   num getPercentage() {
+    if (taskDetails.length == 0) {
+      return 0;
+    }
     int completedTasks = tasksController.getCompletedTasks(taskDetails);
     num completedPercentage = (completedTasks / taskDetails.length) * 100;
     return completedPercentage;
@@ -51,7 +54,9 @@ class HomeHeader extends StatelessWidget {
           ),
           Container(
             color: Colors.white12.withOpacity(.2),
-            width: MediaQuery.of(context).size.width * (getPercentage() / 100),
+            width: taskDetails.length == 0
+                ? 0
+                : MediaQuery.of(context).size.width * (getPercentage() / 100),
             child: Align(
               alignment: FractionalOffset.bottomCenter,
               child: Container(
@@ -73,14 +78,6 @@ class HomeHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Row(
-                //   children: [
-                //     Icon(
-                //       Icons.menu,
-                //       color: Colors.white,
-                //     )
-                //   ],
-                // ),
                 Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,7 +110,7 @@ class HomeHeader extends StatelessWidget {
                         CircularPercentIndicator(
                           radius: 10.0,
                           lineWidth: 2.0,
-                          percent: getPercentage() / 100,
+                          percent: .2,
                           rotateLinearGradient: true,
                           animation: true,
                           backgroundColor: Colors.white54,

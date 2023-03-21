@@ -6,7 +6,9 @@ class TaskListProvider with ChangeNotifier {
   List<TaskDetails> taskLists = [];
   bool loading = true;
   TaskListProvider() {
-    loadTaskListFromDatabase();
+    if (auth.currentUser != null) {
+      loadTaskListFromDatabase();
+    }
   }
 
   void loadTaskListFromDatabase() async {
